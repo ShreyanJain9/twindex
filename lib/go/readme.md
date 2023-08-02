@@ -18,7 +18,7 @@ It concatenates them into a payload string, computes the Blake2b hash of the pay
 encodes the hash as a lowercase base32 string,
 and returns the last 7 characters of the encoded hash as a new *C.char string.
 
-Compile the Go code in the `lib/go` folder by running `go build -o lib/libtwthash.so -buildmode=c-shared twthash.go`
+Compile the Go code in the `lib/go` folder by running `go build -o lib/libtwthash.so -buildmode=c-shared twthash.go`.
 
 To run the accompanying Ruby code, it must be required from the toplevel `twindex` folder.
 

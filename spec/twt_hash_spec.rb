@@ -1,5 +1,4 @@
 # typed: false
-require "rspec/autorun"
 require_relative "../lib/twt_hash"
 describe TwtHash do
   it "generates a yarn-compliant hash" do

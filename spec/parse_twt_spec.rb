@@ -1,5 +1,4 @@
 require_relative "../lib/twt_parser"
-require "rspec/autorun"
 
 $twt = "(#xdfwwgq) @<stigatle https://yarn.stigatle.no/user/stigatle/twtxt.txt> @<shreyan https://shreyanjain.net/twtxt> happy birthday 🎂"
 $parsed_twt = TwtParser.parse_twt($twt)

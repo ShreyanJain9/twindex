@@ -22,6 +22,20 @@ GEM
       parser (>= 3.0.0)
       sorbet-runtime (>= 0.5.9204)
       unparser (>= 0.5.6)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.1)
+    ruby-net-text (0.0.8)
     sorbet (0.5.10940)
       sorbet-static (= 0.5.10940)
     sorbet-runtime (0.5.10940)
@@ -61,6 +75,8 @@ PLATFORMS
 DEPENDENCIES
   ffi
   httparty
+  rspec (~> 3.12)
+  ruby-net-text (~> 0.0.8)
   tapioca
 
 BUNDLED WITH
