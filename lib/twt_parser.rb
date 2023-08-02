@@ -1,4 +1,7 @@
+require_relative "extensions"
+
 module TwtParser
+  using Twindex::Extensions
   def self.parse_twt(twt)
     match_data = twt.match(/(?:\(#(\w+)\))?\s*((?:@<(\w+)\s+(https?|gopher|gemini)?:\/\/\S+>\s*)*)(.*)/)
     if match_data
@@ -11,7 +14,7 @@ module TwtParser
         mentions: (mentions.map { |m| { name: m[0], url: m[1] } }),
         content: content,
         original: twt,
-      }
+      }.reject_empty
     end
   end
 end

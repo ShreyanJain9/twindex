@@ -1,5 +1,6 @@
 # spec/metadata_spec.rb
 
+require_relative "../lib/extensions"
 require_relative "../lib/metadata"
 
 RSpec.describe "#extract_metadata" do
@@ -25,7 +26,7 @@ RSpec.describe "#extract_metadata" do
         ],
       }
 
-      expect(extract_metadata(input_string)).to eq(expected_result)
+      expect(Twindex.extract_metadata(input_string)).to eq(expected_result)
     end
   end
 
@@ -45,7 +46,7 @@ RSpec.describe "#extract_metadata" do
         "description" => "Sample Description",
       }
 
-      expect(extract_metadata(input_string)).to eq(expected_result)
+      expect(Twindex.extract_metadata(input_string)).to eq(expected_result)
     end
   end
 
@@ -53,7 +54,7 @@ RSpec.describe "#extract_metadata" do
     let(:input_string) { "" }
 
     it "returns an empty metadata hash" do
-      expect(extract_metadata(input_string)).to eq({})
+      expect(Twindex.extract_metadata(input_string)).to eq({})
     end
   end
 end

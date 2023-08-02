@@ -1,6 +1,6 @@
 # typed: false
 require_relative "../lib/twt_hash"
-describe TwtHash do
+describe(TwtHash) do
   it "generates a yarn-compliant hash" do
     url = "https://twtxt.net/user/shreyan/twtxt.txt"
     timestamp = "2023-08-01T04:51:05Z"

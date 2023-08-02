@@ -36,6 +36,7 @@ GEM
       rspec-support (~> 3.12.0)
     rspec-support (3.12.1)
     ruby-net-text (0.0.8)
+    sequel (5.71.0)
     sorbet (0.5.10940)
       sorbet-static (= 0.5.10940)
     sorbet-runtime (0.5.10940)
@@ -77,6 +78,7 @@ DEPENDENCIES
   httparty
   rspec (~> 3.12)
   ruby-net-text (~> 0.0.8)
+  sequel (~> 5.71)
   tapioca
 
 BUNDLED WITH

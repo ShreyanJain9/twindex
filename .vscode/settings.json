@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "*.kbp": "jsonc",
-        "*.jsonoop": "jsonc",
-        "*.rkt": "racket",
-        "cstdlib": "c"
-    }
-}

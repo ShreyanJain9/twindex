@@ -10,3 +10,5 @@ gem "ffi"
 gem "rspec", "~> 3.12"
 
 gem "ruby-net-text", "~> 0.0.8"
+
+gem "sequel", "~> 5.71"

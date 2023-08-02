@@ -63,7 +63,7 @@ module FetchTwts
         .map { |line| { created_at: line[0], twt: TwtParser.parse_twt(line[1]), feed: uri } }
         .sort { |a, b| a[:created_at] <=> b[:created_at] }
         .map { |twt| twt.merge({ hash: TwtHash.twt_hash(twt[:feed], twt[:created_at], twt[:twt][:original]) }) }),
-        metadata: extract_metadata(text) }
+        metadata: Twindex.extract_metadata(text) }
     end
   end
 end
