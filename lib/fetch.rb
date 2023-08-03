@@ -17,17 +17,7 @@ module FetchTwts
 
     def from_gopher_url(feed_url)
       get_twts_from(
-        Gopher
-          .new(URI(
-            feed_url
-          )
-            .host, URI(
-            feed_url
-          ).port || 70)
-          .get(
-            URI(feed_url)
-              .path
-          ), feed_url
+        Gopher.get(feed_url), feed_url
       )
     end
 

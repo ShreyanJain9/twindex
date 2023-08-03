@@ -23,19 +23,17 @@ Before using this library, ensure you have the following installed:
    The Ruby wrapper allows you to interact with Gopher servers using the Gopher protocol. Here's how to use it:
 
    ```ruby
-   require 'ffi'
+   require "ffi"
 
-   module GopherLib
-     extend FFI::Library
-     ffi_lib './libgopher.so'  # Adjust the path accordingly if not in the current directory
+    module Gopher
+        extend FFI::Library
+        ffi_lib(File.expand_path("./libgopher.so", __dir__))
+        attach_function(:send_request, :send_gopher_request, [:string, :int, :string, :string], :string)
 
-     # Define the C function signature
-     attach_function :send_gopher_request, [:string, :int, :string, :string], :string
-   end
-
-   class Gopher
-     # ... (Ruby code from the previous pure Ruby, modified to use C version of send_gopher_request implementation)
-   end
+        def self.get(uri)
+            uri.is_a?(URI) ? Gopher.send_request(uri.host, (uri.port || 70), uri.path, "") : get(URI(uri))
+        end
+    end
    ```
 
    Once you have the `Gopher` class available in your Ruby script, you can use it to interact with Gopher servers.
@@ -45,16 +43,6 @@ Before using this library, ensure you have the following installed:
 Here's an example of how to use the `Gopher` class to retrieve information from a Gopher server:
 
 ```ruby
-# Instantiate the Gopher object
-gopher = Gopher.new('gopher.example.com', 70)
-
-# Retrieve a list of items from the Gopher server
-path = '/'
-items = gopher.list(path)
-
-# Print the items
-items.each do |item|
-  puts "#{item[:type]} #{item[:description]} - #{item[:path]}"
-end
+Gopher.get("gopher://tilde.team:70/~ben/phlog/20180718-what-should-i-write-about-today.txt")
 ```
 
