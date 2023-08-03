@@ -1,6 +1,6 @@
 # typed: false
 require "httparty"
-require "net/gemini"
+require_relative "gemini/client.rb"
 require_relative "gopher/client.rb"
 require_relative "twt_parser"
 require_relative "metadata"
@@ -23,8 +23,8 @@ module FetchTwts
 
     def from_gemini_url(feed_url)
       get_twts_from(
-        Net::Gemini.get(
-          URI(feed_url)
+        Gemini.request(
+          feed_url
         ), feed_url
       )
     end
