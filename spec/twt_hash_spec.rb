@@ -1,5 +1,5 @@
 # typed: false
-require_relative "../lib/twt_hash"
+require_relative "../lib/twt_hash/hash"
 describe(TwtHash) do
   it "generates a yarn-compliant hash" do
     url = "https://twtxt.net/user/shreyan/twtxt.txt"

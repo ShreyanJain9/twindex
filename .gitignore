@@ -1,5 +1,2 @@
-lib/go/lib/libtwthash.so
-lib/go/lib/libtwthash.h
-lib/go/lib/libmetadata.so
-.gitignore
-lib/go/lib/libmetadata.h
+*.h
+*.so

@@ -18,17 +18,17 @@ It concatenates them into a payload string, computes the Blake2b hash of the pay
 encodes the hash as a lowercase base32 string,
 and returns the last 7 characters of the encoded hash as a new *C.char string.
 
-Compile the Go code in the `lib/go` folder by running `go build -o lib/libtwthash.so -buildmode=c-shared twthash.go`.
+Compile the Go code in the `lib/twt_hash` folder by running `go build -o libtwthash.so -buildmode=c-shared twthash.go`.
 
 To run the accompanying Ruby code, it must be required from the toplevel `twindex` folder.
 
-It's located at `lib/twt_hash.rb` and registers the function under the `TwtHash` module:
+It's located at `lib/twt_hash/hash.rb` and registers the function under the `TwtHash` module:
 ```ruby
 require "ffi"
 
 module TwtHash
   extend FFI::Library
-  ffi_lib "./lib/go/lib/libtwthash.so"
+  ffi_lib #<path_to_libtwthash.so>
 
   attach_function :twt_hash, :GenerateHash, [:string, :string, :string], :string
 end

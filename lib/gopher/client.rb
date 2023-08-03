@@ -1,5 +1,10 @@
-# typed: false
-require "socket"
+require "ffi"
+
+module GopherLib
+  extend FFI::Library
+  ffi_lib(File.expand_path("./libgopher.so", __dir__))
+  attach_function(:send_gopher_request, [:string, :int, :string, :string], :string)
+end
 
 class Gopher
   attr_reader :server, :port
@@ -10,7 +15,7 @@ class Gopher
   end
 
   def list_raw(path, query = "")
-    send_request(path, query)
+    GopherLib.send_gopher_request(@server, @port, path, query)
   end
 
   def list(path, query = "")
@@ -21,20 +26,10 @@ class Gopher
   end
 
   def get(path)
-    send_request(path)
+    GopherLib.send_gopher_request(@server, @port, path, "")
   end
 
   private
-
-  def send_request(path, query = "")
-    TCPSocket.open(@server, @port, connect_timeout: 3) do |socket|
-      request = query.empty? ? "#{path}\n" : "#{path}\t#{query}\n"
-      socket.print(request)
-      socket.read
-    end
-  rescue StandardError => e
-    raise "Error: #{e.message}"
-  end
 
   def parse_gopher_line(line)
     type, description, path, host, port = line.split("\t")
