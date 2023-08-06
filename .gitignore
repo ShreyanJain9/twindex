@@ -1,1 +1,4 @@
 *.so
+.vscode/settings.json
+db/config.json
+db/twindex.db

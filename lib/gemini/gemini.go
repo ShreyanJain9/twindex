@@ -65,8 +65,7 @@ func MakeGeminiRequest(u *C.char) *C.char {
 	goURL := C.GoString(u)
 	response, err := makeGeminiRequest(goURL)
 	if err != nil {
-		// Handle the error, you can log it or return an empty string for simplicity
-		return C.CString("")
+		return C.CString(err.Error())
 	}
 	return C.CString(response)
 }

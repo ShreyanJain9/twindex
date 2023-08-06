@@ -17,9 +17,9 @@ RSpec.describe "#extract_metadata" do
 
     it "returns the correct metadata hash" do
       expected_result = {
-        "nick" => "somenickname",
-        "description" => "Sample Description",
-        "follow" => [
+        :nick => "somenickname",
+        :description => "Sample Description",
+        :follow => [
           { username: "user1", url: "https://example.com/user1" },
           { username: "user2", url: "https://example.com/user2" },
           { username: "user3", url: "https://example.com/user3" },
@@ -42,8 +42,8 @@ RSpec.describe "#extract_metadata" do
 
     it "skips invalid lines and returns the correct metadata hash" do
       expected_result = {
-        "nick" => "somenickname",
-        "description" => "Sample Description",
+        :nick => "somenickname",
+        :description => "Sample Description",
       }
 
       expect(Twindex.extract_metadata(input_string)).to eq(expected_result)
