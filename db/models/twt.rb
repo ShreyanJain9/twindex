@@ -39,28 +39,29 @@ class Feed < Sequel::Model
   end
 
   def self.from_metadata(metadata)
-    Feed.from_url(metadata[:url]).then do |feed|
+    Feed.from_url(metadata[:url]).tap do |feed|
       if feed
-        feed
-      else
-        Feed.find_or_create(
-          username: metadata[:nick],
-          url: metadata[:url].tap(&method(:puts)),
+        # Update existing feed with new metadata
+        feed.update(
+          nick: metadata[:nick],
           avatar: metadata[:avatar],
-        ).tap do |db_feed|
-          metadata[:follow]&.each do |user|
-            Feed.from_url(
-              user[:url]
-            )
-              .then {
-              |follow_feed|
-              Follow.find_or_create( #TODO MAKE THIS WORK
-                follower_id: db_feed.id,
-                following_id: follow_feed.id,
-              ) # unless db_feed[:url] == follow_feed[:url]
-            }
-          end
-        end
+        )
+      else
+        # Create a new feed if it doesn't exist
+        feed = Feed.create(
+          nick: metadata[:nick],
+          url: metadata[:url],
+          avatar: metadata[:avatar],
+        )
+      end
+      metadata[:follow]&.each do |user|
+        follow_feed = Feed.from_url(user[:url])
+
+        Follow.create(
+          follower_id: (feed.id),
+          following_url: follow_feed.url,
+          follow_nick: user[:username],
+        )
       end
     end
   end
@@ -74,6 +75,12 @@ class Feed < Sequel::Model
         }
       end
     end
+    self.update_time
+  end
+
+  def update_time()
+    self.synced_at = DateTime.now
+    self.save
   end
 end
 
@@ -84,5 +91,4 @@ end
 
 class Follow < Sequel::Model
   many_to_one(:follower, class: :Feed, key: :follower_id)
-  many_to_one(:following, class: :Feed, key: :following_id)
 end
