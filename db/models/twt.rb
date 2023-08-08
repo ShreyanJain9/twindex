@@ -12,7 +12,12 @@ class Twt < Sequel::Model
         hash: tweet[:hash],
       ).tap do |twt|
         tweet[:twt][:mentions]&.each do |mention|
-          Feed.from_url(mention[:url]).then { |feed_mention| twt.add_mention(Mention.create(feed: feed_mention.tap(&method(:puts)))) }
+          Feed.from_url(mention[:url]).then {
+            |feed_mention|
+            twt.add_mention(Mention.create(
+              feed: feed_mention.tap(&method(:puts)),
+            ))
+          }
         end
       end
     end
@@ -49,10 +54,10 @@ class Feed < Sequel::Model
             )
               .then {
               |follow_feed|
-              Follow.find_or_create(
+              Follow.find_or_create( #TODO MAKE THIS WORK
                 follower_id: db_feed.id,
                 following_id: follow_feed.id,
-              ) unless db_feed[:url] == follow_feed[:url]
+              ) # unless db_feed[:url] == follow_feed[:url]
             }
           end
         end

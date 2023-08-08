@@ -46,3 +46,22 @@ Here's an example of how to use the `Gopher` class to retrieve information from 
 Gopher.get("gopher://tilde.team:70/~ben/phlog/20180718-what-should-i-write-about-today.txt")
 ```
 
+TODO allow parsing gophermaps
+
+```ruby
+  def self.parse_gophermap(gophermap)
+    gophermap.split("\r\n").map do |entry|
+      type, description, path, host, port = entry.split("\t")
+
+      {
+        type: type,
+        description: description,
+        path: path,
+        host: host,
+        port: port,
+      }
+    end
+  end
+  ```
+
+  I think I got the order wrong
