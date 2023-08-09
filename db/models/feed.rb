@@ -69,4 +69,8 @@ class Feed < Sequel::Model
   def following
     Follow.where(follower_id: self.id).all
   end
+
+  def to_s
+    "#<Feed(#{self.url})>"
+  end
 end

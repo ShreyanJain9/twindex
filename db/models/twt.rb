@@ -26,4 +26,8 @@ class Twt < Sequel::Model
   def mentioned_feeds
     self.mentions.map(&:feed)
   end
+
+  def to_s
+    "#{created_at().to_datetime.rfc3339}\t#{original()}"
+  end
 end
