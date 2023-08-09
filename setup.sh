@@ -117,8 +117,9 @@ if [ "$setup_db" = true ]; then
     cd db
     go build setup.go
     if [ -f setup ]; then
-        echo "DB setup complete"
         ./setup
+        echo "DB setup complete"
+        rm setup
         cd ..
     else
         echo "Failed to set up DB"

@@ -36,10 +36,10 @@ type Mentions struct {
 }
 
 type Follows struct {
-	ID           uint `gorm:"primaryKey"`
-	FollowerID   uint
-	FollowingURL string
-	FollowNick   string
+	ID          uint `gorm:"primaryKey"`
+	FollowerID  uint
+	FollowingID uint
+	FollowNick  string
 }
 
 func setup() {
