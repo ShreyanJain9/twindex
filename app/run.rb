@@ -11,18 +11,11 @@ class TwindexAPI < Sinatra::Base
     erb :profile
   end
 
-  get "/feed" do
-    @feed = Feed[params[:url]]
-    {
-      uri: @feed.url,
-      nick: @feed.nick,
-      avatar: @feed.avatar,
-    }.to_json
-  end
-
-  get "/mentions" do
-    content_type :"application/json"
-    @mentions = mentions_of_feed(Feed[params[:id]])
-    erb :mentions
+  post "/graphql" do
+    result = API::TwindexSchema.execute(
+      params[:query],
+      variables: params[:variables],
+    )
+    json(result.to_h)
   end
 end

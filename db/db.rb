@@ -3,8 +3,7 @@ require "sequel"
 DB = Sequel.sqlite(File.expand_path("./twindex.db", __dir__))
 
 def load_models
-  require_relative "models/twt.rb"
-  require_relative "models/feed.rb"
-  require_relative "models/mention.rb"
-  require_relative "models/follow.rb"
+  Dir[File.expand_path("./**/*.rb", __dir__)].each do |file|
+    require file
+  end
 end

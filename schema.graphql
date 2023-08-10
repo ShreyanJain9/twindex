@@ -1,0 +1,45 @@
+"""
+A twtxt feed on the network.
+"""
+type Feed {
+  avatar: String
+  followers: [Follow!]
+  follows: [Follow!]
+  id: ID!
+  nick: String
+  syncedAt: ISO8601DateTime
+  twts: [Twt!]
+  url: String!
+}
+
+type Follow {
+  follower: Feed!
+  following: Feed!
+  id: ID!
+}
+
+"""
+An ISO 8601-encoded datetime
+"""
+scalar ISO8601DateTime
+
+type Mention {
+  feed: Feed!
+  id: ID!
+  twt: [Twt!]
+}
+
+type Query {
+  feed(id: ID!): Feed!
+  twt(hash: ID!): Twt!
+}
+
+type Twt {
+  content: String
+  createdAt: ISO8601DateTime
+  feed: Feed
+  hash: ID!
+  mentions: [Mention!]
+  original: String
+  replyTo: String
+}
