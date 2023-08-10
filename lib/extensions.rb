@@ -17,5 +17,15 @@ module Twindex
         end
       end
     end
+    refine NilClass do
+      def map(*)
+        [self]
+      end
+    end
+    refine Time do
+      def empty?
+        self == "1969-12-31T16:00:00-08:00"
+      end
+    end
   end
 end

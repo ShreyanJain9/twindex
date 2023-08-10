@@ -39,6 +39,10 @@ class Feed < Sequel::Model
         end
       end
     end
+
+    def [](url) ## or DB ID
+      (super(url) || Feed.first(url: url))
+    end
   end
 
   def process

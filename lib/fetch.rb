@@ -8,11 +8,15 @@ require_relative "metadata"
 module FetchTwts
   class << self
     def from_http_url(feed_url)
-      parse_feed(
-        HTTParty.get(
-          feed_url
-        ).body, feed_url
-      )
+      begin
+        parse_feed(
+          HTTParty.get(
+            feed_url
+          ).body, feed_url
+        )
+      rescue
+        return "1969-12-31T16:00:00-08:00\tInvalidFeed"
+      end
     end
 
     def from_gopher_url(feed_url)

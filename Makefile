@@ -71,7 +71,7 @@ database:
 test:
 	@echo "Running tests..."
 	@if bundle exec rspec; then \
-		echo "Tests passed! You're good to go!"; \
+		echo "Tests passed! You're good to go! (For more details, run 'rake spec')"; \
 	else \
 		echo "Tests failed. Something must have gone wrong during setup."; \
 		exit 1; \
