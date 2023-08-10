@@ -5,20 +5,24 @@ class Twt < Sequel::Model
 
   def self.create_from_json(tweet, feed)
     Twt.first(hash: tweet[:hash]).then do |twt|
-      twt ? twt : feed.add_twt(
-        created_at: DateTime.parse(tweet[:created_at]).to_s,
-        content: tweet[:twt][:content],
-        original: tweet[:twt][:original],
-        reply_to: tweet[:twt][:reply_to],
-        hash: tweet[:hash],
-      ).tap do |twt|
-        tweet[:twt][:mentions]&.each do |mention|
-          Feed.from_url(mention[:url]).then {
-            |feed_mention|
-            twt.add_mention(Mention.create(
-              feed: feed_mention.tap(&method(:puts)),
-            ))
-          }
+      if twt
+        return twt
+      else
+        feed.add_twt(
+          created_at: DateTime.parse(tweet[:created_at]).to_s,
+          content: tweet[:twt][:content],
+          original: tweet[:twt][:original],
+          reply_to: tweet[:twt][:reply_to],
+          hash: tweet[:hash],
+        ).tap do |twt|
+          tweet[:twt][:mentions]&.each do |mention|
+            Feed.from_url(mention[:url]).then {
+              |feed_mention|
+              twt.add_mention(Mention.create(
+                feed: feed_mention.tap(&method(:puts)),
+              ))
+            }
+          end
         end
       end
     end
@@ -42,5 +46,9 @@ class Twt < Sequel::Model
 
   def replies
     Twt.where(reply_to: self[:hash]).all
+  end
+
+  def parent
+    Twt.where(hash: self[:reply_to]).first
   end
 end

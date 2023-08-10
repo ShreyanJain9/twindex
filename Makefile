@@ -1,4 +1,4 @@
-.PHONY: all gemini gopher twthash database test help
+.PHONY: all gemini gopher twthash database test help deps
 
 help:
 	@echo "Usage: make [target]"
@@ -9,9 +9,10 @@ help:
 	@echo "  twthash           Compile Twt hash support"
 	@echo "  database          Set up DB"
 	@echo "  test              Run tests"
+	@echo "  deps              Install dependencies for Go builds"
 	@echo "  help              Show this help message"
 
-all: gemini gopher twthash database test
+all: deps gemini gopher twthash database test
 
 gemini:
 	@if [ -f lib/gemini/gemini.go ]; then \
@@ -76,3 +77,15 @@ test:
 		echo "Tests failed. Something must have gone wrong during setup."; \
 		exit 1; \
 	fi
+deps:
+	@echo "Installing dependencies..."
+	@cd db; \
+	go get -u gorm.io/gorm; \
+	go get -u gorm.io/driver/sqlite; \
+	go get -u github.com/jinzhu/inflection; \
+	go get -u github.com/jinzhu/now; \
+	go get -u github.com/mattn/go-sqlite3; \
+	cd ../lib/twt_hash; \
+	go get -u github.com/dchest/blake2b; \
+	cd ../..; \
+	bundle > /dev/null; \

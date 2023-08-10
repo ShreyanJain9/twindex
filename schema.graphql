@@ -8,6 +8,11 @@ type Feed {
   avatar: String
 
   """
+  A description of the feed, set by the feed's owner.
+  """
+  bio: String
+
+  """
   A list of the feeds that (explicitly reveal they) follow this feed.
   """
   followers: [Follow!]
@@ -84,7 +89,7 @@ type Query {
     """
     The URL of the feed. Its ID in the indexer's database can be used as well.
     """
-    id: ID!
+    url: ID!
   ): Feed!
   twt(
     """
@@ -127,6 +132,11 @@ type Twt {
   The raw twt, including metadata but excluding timestamp.
   """
   original: String
+
+  """
+  The twt this twt is a reply to.
+  """
+  parent: Twt
 
   """
   A list of replies to the twt.

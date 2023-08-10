@@ -37,6 +37,20 @@
               "deprecationReason": null
             },
             {
+              "name": "bio",
+              "description": "A description of the feed, set by the feed's owner.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "followers",
               "description": "A list of the feeds that (explicitly reveal they) follow this feed.",
               "args": [
@@ -364,7 +378,7 @@
               "description": null,
               "args": [
                 {
-                  "name": "id",
+                  "name": "url",
                   "description": "The URL of the feed. Its ID in the indexer's database can be used as well.",
                   "type": {
                     "kind": "NON_NULL",
@@ -539,6 +553,20 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "parent",
+              "description": "The twt this twt is a reply to.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Twt",
                 "ofType": null
               },
               "isDeprecated": false,

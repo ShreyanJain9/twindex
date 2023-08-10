@@ -26,6 +26,7 @@ type Feeds struct {
 	Nick     string
 	URL      string `gorm:"unique"`
 	Avatar   string
+	Bio      string
 	SyncedAt time.Time
 }
 

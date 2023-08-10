@@ -7,7 +7,7 @@ module Twindex
                 .map { |line| line.sub(/^#\s*/, "") }
                 .partition { |line| line.start_with?("follow") }
                 .then { |follow_lines, meta_lines|
-      {
+      { # TODO bio links handled same as follow
         :follow => follow_lines.map { |line|
           line.match(/^follow\s*=\s*(\S+)\s+(.+)/)&.captures&.then { |username, url|
             { username: username, url: url }

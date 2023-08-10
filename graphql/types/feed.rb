@@ -16,6 +16,9 @@ module API
     field(:synced_at, GraphQL::Types::ISO8601DateTime) {
       description("The last time the indexer crawled the feed.")
     }
+    field(:bio, String) {
+      description("A description of the feed, set by the feed's owner.")
+    }
   end
 end
 

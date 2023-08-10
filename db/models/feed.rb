@@ -14,20 +14,11 @@ class Feed < Sequel::Model
 
     def from_metadata(metadata)
       Feed.from_url(metadata[:url]).tap do |feed|
-        if feed
-          # Update existing feed with new metadata
-          feed.update(
-            nick: metadata[:nick],
-            avatar: metadata[:avatar],
-          )
-        else
-          # Create a new feed if it doesn't exist
-          feed = Feed.create(
-            nick: metadata[:nick],
-            url: metadata[:url],
-            avatar: metadata[:avatar],
-          )
-        end
+        feed.update(
+          nick: metadata[:nick],
+          avatar: metadata[:avatar],
+          bio: metadata[:description],
+        )
         metadata[:follow]&.each do |user|
           follow_feed = Feed.from_url(user[:url])
 

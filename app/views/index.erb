@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>twtxt Feed Frontend</title>
+</head>
+<body>
+  <h1>twtxt Feed Frontend</h1>
+
+  <div>
+    <h2>Feed Information</h2>
+    <form id="feedForm">
+      <label for="feedId">Enter Feed ID or URL:</label>
+      <input type="text" id="feedId" name="feedId" required>
+      <button type="submit">Fetch Feed</button>
+    </form>
+
+    <div id="feedInfo">
+      <!-- Feed information will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("feedForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const feedId = document.getElementById("feedId").value;
+
+      // Replace with your actual GraphQL server URL
+      const apiUrl = "/graphql";
+
+      const query = `
+        query GetFeed($id: ID!) {
+          feed(id: $id) {
+            avatar
+            followers {
+              follower {
+                nick
+              }
+            }
+            follows {
+              following {
+                nick
+              }
+            }
+            id
+            mentions {
+              feed {
+                nick
+              }
+              twt {
+                content
+              }
+            }
+            nick
+            syncedAt
+            twts {
+              content
+              createdAt
+              mentions {
+                feed {
+                  nick
+                }
+              }
+              replies {
+                content
+              }
+            }
+            url
+          }
+        }
+      `;
+
+      const variables = {
+        id: feedId,
+      };
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query,
+            variables,
+          }),
+        });
+
+        const data = await response.json();
+
+        const feedInfo = data.data.feed;
+        const feedInfoContainer = document.getElementById("feedInfo");
+
+        // Replace with your preferred way of displaying the feed information
+        feedInfoContainer.innerHTML = `
+          <h3>${feedInfo.nick}</h3>
+          <p>Avatar: <img src="${feedInfo.avatar}" alt="${feedInfo.nick}'s Avatar"></p>
+          <p>Followers: ${feedInfo.followers.map(follower => follower.follower.nick).join(", ")}</p>
+          <p>Follows: ${feedInfo.follows.map(follow => follow.following.nick).join(", ")}</p>
+          <p>Twts:</p>
+          <ul>
+            ${feedInfo.twts.map(twt => `
+              <li>
+                <p>${twt.content}</p>
+                <p>Created At: ${twt.createdAt}</p>
+                <p>Mentions: ${twt.mentions.map(mention => mention.feed.nick).join(", ")}</p>
+                <p>Replies: ${twt.replies.map(reply => reply.content).join(", ")}</p>
+              </li>
+            `).join("")}
+          </ul>
+        `;
+      } catch (error) {
+        console.error("Error fetching feed:", error);
+      }
+    });
+  </script>
+</body>
+</html>

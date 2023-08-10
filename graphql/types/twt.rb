@@ -16,6 +16,9 @@ module API
     field(:reply_to, String) {
       description("The hash of the twt that this twt is a reply to.")
     }
+    field(:parent, API::TwtType) {
+      description("The twt this twt is a reply to.")
+    }
     field(:mentions, [API::MentionType]) {
       description("A list of mentioned feeds in the twt.")
     }

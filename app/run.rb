@@ -1,9 +1,11 @@
 require_relative "../app"
 require "sinatra/base"
+require "sinatra/reloader" if ENV["RACK_ENV"] == "development"
+require_relative "../graphql/types"
 
 class TwindexAPI < Sinatra::Base
   get "/" do
-    "Hello World!"
+    erb :index
   end
 
   get "/profile" do
@@ -12,10 +14,10 @@ class TwindexAPI < Sinatra::Base
   end
 
   post "/graphql" do
-    result = API::TwindexSchema.execute(
-      params[:query],
-      variables: params[:variables],
+    puts
+    result = TwindexSchema.execute(
+      GraphQL.parse(request.body.read), # TODO make this actually parse the darn string
     )
-    json(result.to_h)
+    result.to_h.to_json
   end
 end
