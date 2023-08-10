@@ -8,6 +8,10 @@
 <body>
   <h1>twtxt Feed Frontend</h1>
 
+  <p>
+  This frontend is intentionally very clumsy. I only made it to test the GraphQL endpoint :)
+   </p>
+
   <div>
     <h2>Feed Information</h2>
     <form id="feedForm">
@@ -32,7 +36,7 @@
 
       const query = `
         query GetFeed($id: ID!) {
-          feed(id: $id) {
+          feed(url: $id) {
             avatar
             followers {
               follower {
@@ -44,15 +48,6 @@
                 nick
               }
             }
-            id
-            mentions {
-              feed {
-                nick
-              }
-              twt {
-                content
-              }
-            }
             nick
             syncedAt
             twts {
@@ -61,7 +56,11 @@
               mentions {
                 feed {
                   nick
+                  url
                 }
+              }
+              parent {
+                content
               }
               replies {
                 content
@@ -105,7 +104,7 @@
               <li>
                 <p>${twt.content}</p>
                 <p>Created At: ${twt.createdAt}</p>
-                <p>Mentions: ${twt.mentions.map(mention => mention.feed.nick).join(", ")}</p>
+                <p>Mentions: ${twt.mentions.map(mention => mention.feed.url).join(", ")}</p>
                 <p>Replies: ${twt.replies.map(reply => reply.content).join(", ")}</p>
               </li>
             `).join("")}

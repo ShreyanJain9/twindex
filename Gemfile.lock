@@ -27,6 +27,9 @@ GEM
       racc
     prettier_print (1.2.1)
     racc (1.7.1)
+    rack (2.2.8)
+    rack-contrib (2.3.0)
+      rack (~> 2.0)
     rbi (0.0.17)
       ast
       parser (>= 3.0.0)
@@ -90,6 +93,7 @@ DEPENDENCIES
   ffi
   graphql (~> 2.0)
   httparty
+  rack-contrib (~> 2.3)
   rspec (~> 3.12)
   ruby-net-text (~> 0.0.8)
   sequel (~> 5.71)

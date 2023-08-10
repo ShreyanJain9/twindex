@@ -61,7 +61,7 @@ class Feed < Sequel::Model
     Follow.where(following_id: self.id).all
   end
 
-  def following
+  def follows
     Follow.where(follower_id: self.id).all
   end
 

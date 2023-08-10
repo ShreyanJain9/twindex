@@ -16,3 +16,5 @@ gem "sequel", "~> 5.71"
 gem 'activesupport', '~> 7.0', '>= 7.0.6'
 
 gem "graphql", "~> 2.0"
+
+gem "rack-contrib", "~> 2.3"
