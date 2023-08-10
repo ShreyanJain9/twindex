@@ -76,4 +76,3 @@ test:
 		echo "Tests failed. Something must have gone wrong during setup."; \
 		exit 1; \
 	fi
-

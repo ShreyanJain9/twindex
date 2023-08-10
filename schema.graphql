@@ -2,18 +2,61 @@
 A twtxt feed on the network.
 """
 type Feed {
+  """
+  A url to the avatar image of the feed set by the feed's owner.
+  """
   avatar: String
+
+  """
+  A list of the feeds that (explicitly reveal they) follow this feed.
+  """
   followers: [Follow!]
+
+  """
+  A list of the feeds the feed (explicitly reveals it) follows.
+  """
   follows: [Follow!]
+
+  """
+  The ID of the feed in the indexer's database. Not usually useful.
+  """
   id: ID!
+
+  """
+  A list of the twts that mention this feed. Useful for generating notifications.
+  """
+  mentions: [Mention!]
+
+  """
+  The human-readable nickname of the feed set by the feed's owner.
+  """
   nick: String
+
+  """
+  The last time the indexer crawled the feed.
+  """
   syncedAt: ISO8601DateTime
+
+  """
+  A list of the twts the feed has published.
+  """
   twts: [Twt!]
+
+  """
+  The URL of the feed.
+  """
   url: String!
 }
 
 type Follow {
+  """
+  The feed that is doing the following.
+  """
   follower: Feed!
+
+  """
+  The feed that is being followed.
+  """
   following: Feed!
   id: ID!
 }
@@ -24,22 +67,74 @@ An ISO 8601-encoded datetime
 scalar ISO8601DateTime
 
 type Mention {
+  """
+  The feed the twt this mention is in mentioned.
+  """
   feed: Feed!
   id: ID!
+
+  """
+  The twt this mention is in.
+  """
   twt: [Twt!]
 }
 
 type Query {
-  feed(id: ID!): Feed!
-  twt(hash: ID!): Twt!
+  feed(
+    """
+    The URL of the feed. Its ID in the indexer's database can be used as well.
+    """
+    id: ID!
+  ): Feed!
+  twt(
+    """
+    The hash of the twt, per https://dev.twtxt.net/doc/twthashextension.html
+    """
+    hash: ID!
+  ): Twt!
 }
 
+"""
+A specific twt.
+"""
 type Twt {
+  """
+  The content of the twt, excluding metadata.
+  """
   content: String
+
+  """
+  Timestamp of the twt.
+  """
   createdAt: ISO8601DateTime
+
+  """
+  The twtxt feed the twt belongs to.
+  """
   feed: Feed
+
+  """
+  The hash of the twt, per https://dev.twtxt.net/doc/twthashextension.html
+  """
   hash: ID!
+
+  """
+  A list of mentioned feeds in the twt.
+  """
   mentions: [Mention!]
+
+  """
+  The raw twt, including metadata but excluding timestamp.
+  """
   original: String
+
+  """
+  A list of replies to the twt.
+  """
+  replies: [Twt!]
+
+  """
+  The hash of the twt that this twt is a reply to.
+  """
   replyTo: String
 }

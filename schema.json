@@ -24,7 +24,7 @@
           "fields": [
             {
               "name": "avatar",
-              "description": null,
+              "description": "A url to the avatar image of the feed set by the feed's owner.",
               "args": [
 
               ],
@@ -38,7 +38,7 @@
             },
             {
               "name": "followers",
-              "description": null,
+              "description": "A list of the feeds that (explicitly reveal they) follow this feed.",
               "args": [
 
               ],
@@ -60,7 +60,7 @@
             },
             {
               "name": "follows",
-              "description": null,
+              "description": "A list of the feeds the feed (explicitly reveals it) follows.",
               "args": [
 
               ],
@@ -82,7 +82,7 @@
             },
             {
               "name": "id",
-              "description": null,
+              "description": "The ID of the feed in the indexer's database. Not usually useful.",
               "args": [
 
               ],
@@ -99,8 +99,30 @@
               "deprecationReason": null
             },
             {
+              "name": "mentions",
+              "description": "A list of the twts that mention this feed. Useful for generating notifications.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Mention",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "nick",
-              "description": null,
+              "description": "The human-readable nickname of the feed set by the feed's owner.",
               "args": [
 
               ],
@@ -114,7 +136,7 @@
             },
             {
               "name": "syncedAt",
-              "description": null,
+              "description": "The last time the indexer crawled the feed.",
               "args": [
 
               ],
@@ -128,7 +150,7 @@
             },
             {
               "name": "twts",
-              "description": null,
+              "description": "A list of the twts the feed has published.",
               "args": [
 
               ],
@@ -150,7 +172,7 @@
             },
             {
               "name": "url",
-              "description": null,
+              "description": "The URL of the feed.",
               "args": [
 
               ],
@@ -181,7 +203,7 @@
           "fields": [
             {
               "name": "follower",
-              "description": null,
+              "description": "The feed that is doing the following.",
               "args": [
 
               ],
@@ -199,7 +221,7 @@
             },
             {
               "name": "following",
-              "description": null,
+              "description": "The feed that is being followed.",
               "args": [
 
               ],
@@ -268,7 +290,7 @@
           "fields": [
             {
               "name": "feed",
-              "description": null,
+              "description": "The feed the twt this mention is in mentioned.",
               "args": [
 
               ],
@@ -304,7 +326,7 @@
             },
             {
               "name": "twt",
-              "description": null,
+              "description": "The twt this mention is in.",
               "args": [
 
               ],
@@ -343,7 +365,7 @@
               "args": [
                 {
                   "name": "id",
-                  "description": null,
+                  "description": "The URL of the feed. Its ID in the indexer's database can be used as well.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
@@ -376,7 +398,7 @@
               "args": [
                 {
                   "name": "hash",
-                  "description": null,
+                  "description": "The hash of the twt, per https://dev.twtxt.net/doc/twthashextension.html",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
@@ -424,11 +446,11 @@
         {
           "kind": "OBJECT",
           "name": "Twt",
-          "description": null,
+          "description": "A specific twt.",
           "fields": [
             {
               "name": "content",
-              "description": null,
+              "description": "The content of the twt, excluding metadata.",
               "args": [
 
               ],
@@ -442,7 +464,7 @@
             },
             {
               "name": "createdAt",
-              "description": null,
+              "description": "Timestamp of the twt.",
               "args": [
 
               ],
@@ -456,7 +478,7 @@
             },
             {
               "name": "feed",
-              "description": null,
+              "description": "The twtxt feed the twt belongs to.",
               "args": [
 
               ],
@@ -470,7 +492,7 @@
             },
             {
               "name": "hash",
-              "description": null,
+              "description": "The hash of the twt, per https://dev.twtxt.net/doc/twthashextension.html",
               "args": [
 
               ],
@@ -488,7 +510,7 @@
             },
             {
               "name": "mentions",
-              "description": null,
+              "description": "A list of mentioned feeds in the twt.",
               "args": [
 
               ],
@@ -510,7 +532,7 @@
             },
             {
               "name": "original",
-              "description": null,
+              "description": "The raw twt, including metadata but excluding timestamp.",
               "args": [
 
               ],
@@ -523,8 +545,30 @@
               "deprecationReason": null
             },
             {
+              "name": "replies",
+              "description": "A list of replies to the twt.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Twt",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "replyTo",
-              "description": null,
+              "description": "The hash of the twt that this twt is a reply to.",
               "args": [
 
               ],

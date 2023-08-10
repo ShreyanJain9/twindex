@@ -40,15 +40,7 @@ class Twt < Sequel::Model
     "#<Twt(#{self[:hash]}) #{self.id} Feed #{self.feed_id} #{self.to_s}>"
   end
 
-  def to_h
-    {
-      hash: self[:hash],
-      created_at: self[:created_at].to_datetime.rfc3339,
-      content: self[:content],
-      original: self[:original],
-      reply_to: self[:reply_to],
-      mentions: self[:mentions].map(&:to_h),
-      feed: self.feed.url,
-    }.reject_empty
+  def replies
+    Twt.where(reply_to: self[:hash]).all
   end
 end

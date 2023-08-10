@@ -11,11 +11,16 @@ end
 module API
   class QueryType < GraphQL::Schema::Object
     field(:feed, API::FeedType, null: false) do
-      argument(:id, ID, required: true) ## Can be the URL too, since Feed.[] takes ID or URL
+      argument(:id, ID, required: true) {
+        description("The URL of the feed. Its ID in the indexer's database can be used as well.")
+      }
+      ## Can be the either, since Feed.[] takes ID or URL
     end
 
     field(:twt, API::TwtType, null: false) do
-      argument(:hash, ID, required: true)
+      argument(:hash, ID, required: true) {
+        description("The hash of the twt, per https://dev.twtxt.net/doc/twthashextension.html")
+      }
     end
 
     def feed(id:)
