@@ -17,6 +17,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    language_server-protocol (3.17.0.3)
     mini_mime (1.1.2)
     minitest (5.19.0)
     multi_xml (0.6.0)
@@ -48,6 +49,11 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.1)
+    ruby-lsp (0.8.1)
+      language_server-protocol (~> 3.17.0)
+      sorbet-runtime
+      syntax_tree (>= 6.1.1, < 7)
+      yarp (~> 0.6.0)
     ruby-net-text (0.0.8)
     sequel (5.71.0)
     sorbet (0.5.10940)
@@ -84,6 +90,7 @@ GEM
     yard-sorbet (0.8.1)
       sorbet-runtime (>= 0.5)
       yard (>= 0.9)
+    yarp (0.6.0)
 
 PLATFORMS
   x86_64-darwin-22
@@ -95,6 +102,7 @@ DEPENDENCIES
   httparty
   rack-contrib (~> 2.3)
   rspec (~> 3.12)
+  ruby-lsp (~> 0.8.1)
   ruby-net-text (~> 0.0.8)
   sequel (~> 5.71)
   tapioca
