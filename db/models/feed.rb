@@ -34,23 +34,35 @@ class Feed < Sequel::Model
     def [](url) ## or DB ID
       (super(url) || Feed.first(url: url))
     end
+
+    def all_synced
+      Feed.all.partition(&:synced?)[0]
+    end
+
+    def all_unsynced
+      Feed.all.partition(&:synced?)[1]
+    end
+
+    def Update(id)
+      FetchTwts.from(Feed[id].url).then do |feed_raw|
+        Feed.from_metadata(feed_raw[:metadata]).update_time.tap do |feed_in_db|
+          feed_raw[:twts].map {
+            |twt|
+            Twt.create_from_json(twt, feed_in_db)
+          }
+        end
+      end
+    end
   end
 
   def process
-    FetchTwts.from(url).then do |raw|
-      Feed.from_metadata(raw[:metadata]).tap do |db_feed|
-        raw[:twts].map {
-          |twt|
-          Twt.create_from_json(twt.tap(&method(:puts)), db_feed)
-        }
-      end
-    end
-    self.update_time
+    Feed::Update(self.id)
   end
 
   def update_time()
     self.synced_at = DateTime.now
     self.save
+    self
   end
 
   def mentioners
@@ -67,5 +79,13 @@ class Feed < Sequel::Model
 
   def to_s
     "#<Feed(#{self.url})>"
+  end
+
+  def synced?
+    !(self.synced_at.nil?)
+  end
+
+  def update_metadata
+    Feed.from_metadata(FetchTwts.from(self.url)[:metadata])
   end
 end

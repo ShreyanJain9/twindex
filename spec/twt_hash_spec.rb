@@ -1,4 +1,5 @@
 # typed: false
+require_relative "../lib/extensions"
 require_relative "../lib/twt_hash/hash"
 describe(TwtHash) do
   it "generates a yarn-compliant hash" do

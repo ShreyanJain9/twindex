@@ -1,4 +1,5 @@
 require "uri"
+require_relative "../lib/extensions"
 require_relative "../lib/gopher/client"
 RSpec.describe(Gopher) do
   describe "#get" do

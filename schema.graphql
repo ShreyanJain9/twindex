@@ -97,6 +97,12 @@ type Query {
     """
     hash: ID!
   ): Twt!
+  twts(
+    """
+    A list of twts which match the query.
+    """
+    query: String!
+  ): [Twt!]
 }
 
 """

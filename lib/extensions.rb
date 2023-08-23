@@ -1,3 +1,7 @@
+def Relative(path)
+  File.expand_path(path, File.dirname(caller_locations(1, 1).first.absolute_path))
+end
+
 module Twindex
   module Extensions
     refine Hash do
@@ -15,16 +19,6 @@ module Twindex
             instance_variable_set(instance_variable, instance_eval(&block))
           end
         }
-      end
-
-      def func(sym, lmbda)
-        define_method(sym) do |*args|
-          if lmbda.arity == args.size
-            instance_exec(*args, &lmbda)
-          else
-            raise ArgumentError, "Wrong number of arguments (given #{args.size}, expected #{lmbda.arity})"
-          end
-        end
       end
     end
     refine NilClass do

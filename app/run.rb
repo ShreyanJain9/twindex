@@ -6,11 +6,7 @@ require_relative "../graphql/types"
 
 class TwindexAPI < Sinatra::Base
   use(Rack::JSONBodyParser)
-  post("/graphql") {
-    json(TwindexSchema.execute(
-      params[:query],
-      variables: params[:variables],
-      context: { current_user: nil },
-    ).to_h)
-  }
 end
+
+require_relative "routes/registry"
+require_relative "routes/graphql"

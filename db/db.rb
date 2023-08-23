@@ -1,9 +1,9 @@
 require "sequel"
 
-DB = Sequel.sqlite(File.expand_path("./twindex.db", __dir__))
+DB = Sequel.sqlite(Relative("./twindex.db"))
 
 def load_models
-  Dir[File.expand_path("./models/*.rb", __dir__)].each do |file|
+  Dir[Relative("./models/*.rb")].each do |file|
     require file
   end
 end

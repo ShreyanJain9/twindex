@@ -1,3 +1,4 @@
+require_relative "../lib/extensions"
 require_relative "../lib/twt_parser"
 
 $twt = "(#xdfwwgq) @<stigatle https://yarn.stigatle.no/user/stigatle/twtxt.txt> @<shreyan https://shreyanjain.net/twtxt> happy birthday 🎂"

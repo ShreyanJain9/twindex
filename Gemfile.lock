@@ -55,7 +55,10 @@ GEM
       syntax_tree (>= 6.1.1, < 7)
       yarp (~> 0.6.0)
     ruby-net-text (0.0.8)
+    rufo (0.16.2)
     sequel (5.71.0)
+    sequel_enum (0.2.0)
+      sequel
     sorbet (0.5.10940)
       sorbet-static (= 0.5.10940)
     sorbet-runtime (0.5.10940)
@@ -104,7 +107,9 @@ DEPENDENCIES
   rspec (~> 3.12)
   ruby-lsp (~> 0.8.1)
   ruby-net-text (~> 0.0.8)
+  rufo (~> 0.16.2)
   sequel (~> 5.71)
+  sequel_enum (~> 0.2.0)
   tapioca
 
 BUNDLED WITH

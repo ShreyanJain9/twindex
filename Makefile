@@ -61,6 +61,7 @@ database:
 	go build setup.go; \
 	if [ -f setup ]; then \
 		./setup; \
+		ruby setup.rb; \
 		echo "DB setup complete"; \
 		rm setup; \
 		cd ..; \

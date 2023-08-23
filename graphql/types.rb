@@ -2,7 +2,7 @@ require "graphql"
 require_relative "../app"
 load_models()
 
-File.expand_path("./types", __dir__).then do |dir|
+Relative("./types").then do |dir|
   Dir["#{dir}/**/*.rb"].each do |file|
     require file
   end
@@ -23,12 +23,28 @@ module API
       }
     end
 
+    field(:twts, [API::TwtType]) {
+      argument(:query, String, required: true) do
+        description("A list of twts which match the query.")
+      end
+    }
+
     def feed(url:)
       Feed[url]
     end
 
     def twt(hash:)
       Twt[hash]
+    end
+
+    def twts(query:)
+      search_twts(query)
+    end
+  end
+
+  def self.plain_search(query)
+    search_twts(query).map do |twt|
+      "#{twt.feed.nick}\t#{twt.feed.url}\t#{twt[:created_at]}\t#{twt[:original]}"
     end
   end
 end

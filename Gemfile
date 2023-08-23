@@ -20,3 +20,8 @@ gem "graphql", "~> 2.0"
 gem "rack-contrib", "~> 2.3"
 
 gem "ruby-lsp", "~> 0.8.1"
+
+gem "sequel_enum", "~> 0.2.0"
+
+
+gem "rufo", "~> 0.16.2"
