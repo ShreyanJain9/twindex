@@ -40,6 +40,10 @@ class Twt < Sequel::Model
     "#{created_at().to_datetime.rfc3339}\t#{original()}"
   end
 
+  def to_registry_plain
+    "#{self.feed.nick}\t#{self.feed.url}\t#{self.to_s}"
+  end
+
   def inspect
     "#<Twt(#{self[:hash]}) #{self.id} Feed #{self.feed_id} #{self.to_s}>"
   end

@@ -43,9 +43,7 @@ module API
   end
 
   def self.plain_search(query)
-    search_twts(query).map do |twt|
-      "#{twt.feed.nick}\t#{twt.feed.url}\t#{twt[:created_at]}\t#{twt[:original]}"
-    end
+    search_twts(query).map(&:to_registry_plain)
   end
 end
 
