@@ -2,7 +2,7 @@ require "ffi"
 
 module Gopher
   extend FFI::Library
-  ffi_lib(Relative("./libgopher.so"))
+  ffi_lib(Relative("./gopher.dylib"))
   attach_function(:send_request, :send_gopher_request, [:string, :int, :string, :string], :string)
 
   def self.get(uri)
