@@ -1,6 +1,9 @@
 import net
 fn gopher_uri_to_req(host string, port int, path string, query string) string {
-    return "${host}\t${port}\t${path}\t${query}\r\n"
+    mut req := "${path}"
+    if query.len > 0 { req += "\t${query}" }
+    req += "\r\n"
+    return req
 }
 
 fn send_request_to_host(address string, port int, selector string) !string {
@@ -9,26 +12,35 @@ fn send_request_to_host(address string, port int, selector string) !string {
     }
 
     conn.write_string(selector) or { return err }
-    mut text := ""
 
-    mut buffer := []u8{}
-    for {
-        mut line := conn.read_line()
-        if line == "" {
-            break
-        }
-		line += "\n"
-        buffer << line.bytes()
-    }
-    text = buffer[0].str()
-    return text
+	mut text := ""
 
+	for {
+		mut line := conn.read_line()
+		if line.is_blank() {
+			break
+		}
+		else {
+			text += line
+		}
+	}
+
+	conn.close() or { panic(err) }
+
+	return text
 }
 
-[export: 'make_gopher_request']
 fn make_gopher_request(host string, port int, path string, query string) string {
     req := gopher_uri_to_req(host, port, path, query)
     resp := send_request_to_host(host, port, req) or { panic(err) }
     return resp
 }
 
+[export: 'send_gopher_request']
+fn send_gopher_request(host &char, port int, path &char, query &char) &char {
+    server := unsafe { host.vstring() }
+    path_string := unsafe { path.vstring() }
+    query_str := unsafe { query.vstring() }
+    rep := make_gopher_request(server, port, path_string, query_str)
+    return rep.str
+}
