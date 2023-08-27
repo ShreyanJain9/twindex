@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.6)
+    activesupport (7.0.7.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -63,6 +63,7 @@ GEM
       sorbet-static (= 0.5.10940)
     sorbet-runtime (0.5.10940)
     sorbet-static (0.5.10940-universal-darwin-22)
+    sorbet-static (0.5.10940-x86_64-linux)
     sorbet-static-and-runtime (0.5.10940)
       sorbet (= 0.5.10940)
       sorbet-runtime (= 0.5.10940)
@@ -97,9 +98,10 @@ GEM
 
 PLATFORMS
   x86_64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
-  activesupport (~> 7.0, >= 7.0.6)
+  activesupport (~> 7.0)
   ffi
   graphql (~> 2.0)
   httparty
