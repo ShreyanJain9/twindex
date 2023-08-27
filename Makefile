@@ -15,11 +15,11 @@ help:
 all: deps gemini gopher twthash database test
 
 gemini:
-	@if [ -f lib/gemini/gemini.go ]; then \
+	@if [ -f lib/gemini/gemini.v ]; then \
 		echo "Compiling Gemini support..."; \
 		cd lib/gemini; \
-		go build -o libgemini.so -buildmode=c-shared gemini.go; \
-		if [ -f libgemini.so ]; then \
+		v -d no_backtrace -shared gemini.v; \
+		if [ -f gemini.dylib ]; then \
 			echo "Gemini support compiled"; \
 		else \
 			echo "Failed to compile Gemini support"; \
@@ -27,7 +27,7 @@ gemini:
 		fi; \
 		cd ../..; \
 	else \
-		echo "Error: lib/gemini/gemini.go not found. Make sure you're in the right directory."; \
+		echo "Error: lib/gemini/gemini.v not found. Make sure you're in the right directory."; \
 		exit 1; \
 	fi
 
