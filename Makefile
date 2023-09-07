@@ -34,8 +34,8 @@ gemini:
 gopher:
 	@echo "Compiling Gopher support..."
 	@cd lib/gopher; \
-	v -d no_backtrace -shared gopher.v; \
-	if [ -f gopher.dylib ]; then \
+	gcc -shared -o libgopher.so gopher.c; \
+	if [ -f libgopher.so ]; then \
 		echo "Gopher support compiled"; \
 		cd ../..; \
 	else \
