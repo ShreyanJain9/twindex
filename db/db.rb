@@ -20,8 +20,11 @@ WHERE rowid NOT IN (
 end
 
 module Twindex
-  def self.get_latest_twts
-    DB["SELECT hash FROM twts ORDER BY created_at DESC LIMIT 10;"].all.map do |hash|
+  extend T::Sig
+
+  sig { params(limit: Integer).returns(T::Array[Twt]) }
+  def self.get_latest_twts(limit = 10)
+    DB["SELECT hash FROM twts ORDER BY created_at DESC LIMIT #{limit};"].all.map do |hash|
       Twt[hash[:hash]]
     end
   end
