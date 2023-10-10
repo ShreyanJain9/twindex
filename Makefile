@@ -1,4 +1,4 @@
-.PHONY: all gemini gopher twthash database test help deps
+.PHONY: all twthash database test help deps
 
 help:
 	@echo "Usage: make [target]"
@@ -13,8 +13,9 @@ help:
 	@echo "  help              Show this help message"
 
 all: deps gemini gopher twthash database test
+gemini: lib/gemini/libgemini.so
 
-gemini:
+lib/gemini/libgemini.so:
 	@if [ -f lib/gemini/gemini.go ]; then \
 		echo "Compiling Gemini support..."; \
 		cd lib/gemini; \
@@ -31,7 +32,9 @@ gemini:
 		exit 1; \
 	fi
 
-gopher:
+gopher: lib/gopher/libgopher.so
+
+lib/gopher/libgopher.so:
 	@echo "Compiling Gopher support..."
 	@cd lib/gopher; \
 	gcc -shared -o libgopher.so gopher.c; \
