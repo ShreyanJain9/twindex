@@ -21,11 +21,11 @@ namespace(:feed) do
     Feed[args[:feed_id]].process
   end
   task(:sync_new) do
-    sync_new_feeds()
+    sync_new_feeds
   end
 end
 
-GraphQL::RakeTask.new(schema_name: "TwindexSchema")
+GraphQL::RakeTask.new(schema_name: :TwindexSchema)
 namespace :graphql do
   task export: :environment do
     Rake::Task["graphql:schema:dump"].invoke
