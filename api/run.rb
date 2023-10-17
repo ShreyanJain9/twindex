@@ -4,8 +4,10 @@ require "sinatra/contrib"
 require "rack/contrib"
 require_relative "../graphql/types"
 
-class TwindexAPI < Sinatra::Base
-  use(Rack::JSONBodyParser)
+module Twindex
+  class API < Sinatra::Base
+    use(Rack::JSONBodyParser)
+  end
 end
 
 require_relative "routes/registry"

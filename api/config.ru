@@ -1,3 +1,3 @@
 require_relative "run"
 
-run(TwindexAPI)
+run(Twindex::API)

@@ -5,13 +5,18 @@ require_relative "gopher/client.rb"
 require_relative "twt_parser"
 require_relative "metadata"
 
+module Twindex
+  VERSION = "0.1.0".freeze
+  HEADERS = { "User-Agent" => "Twindex/#{Twindex::VERSION} Ruby/#{RUBY_VERSION} (#{RUBY_ENGINE} #{RUBY_PLATFORM}) HTTParty/#{HTTParty::VERSION}" }.freeze
+end
+
 module FetchTwts
   class << self
     def from_http_url(feed_url)
       begin
         parse_feed(
           HTTParty.get(
-            feed_url
+            feed_url, headers: Twindex::HEADERS
           ).body, feed_url
         )
       rescue

@@ -16,15 +16,16 @@ RSpec.describe "#extract_metadata" do
     end
 
     it "returns the correct metadata hash" do
-      expected_result = {
-        :nick => "somenickname",
-        :description => "Sample Description",
-        :follow => [
-          { username: "user1", url: "https://example.com/user1" },
-          { username: "user2", url: "https://example.com/user2" },
-          { username: "user3", url: "https://example.com/user3" },
-        ],
-      }
+        let :expected_result do {
+          :nick => "somenickname",
+          :description => "Sample Description",
+          :follow => [
+            { username: "user1", url: "https://example.com/user1" },
+            { username: "user2", url: "https://example.com/user2" },
+            { username: "user3", url: "https://example.com/user3" },
+          ],
+        }
+      end
 
       expect(Twindex.extract_metadata(input_string)).to eq(expected_result)
     end
