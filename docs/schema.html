@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: monospace;
+        }
+
+        .graphql {
+            padding: 20px;
+            white-space: pre-wrap;
+        }
+
+        .graphql code {
+            display: block;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            font-size: 16px;
+            overflow-x: auto;
+        }
+
+        .graphql code::before {
+            content: "";
+            counter-reset: line;
+        }
+
+        .graphql code .line::before {
+            content: counter(line);
+            counter-increment: line;
+            padding-right: 20px;
+            color: #888;
+        }
+
+        .graphql code .keyword {
+            color: #8ac3d7;
+        }
+
+        .graphql code .scalar {
+            color: #d28f79;
+        }
+
+        .graphql code .type {
+            color: #b9a3eb;
+        }
+
+        .graphql code .string {
+            color: #a8cc8c;
+        }
+
+        .graphql code .variable {
+            color: #ff9e64;
+        }
+
+        .graphql code .comment {
+            color: #888;
+        }
+
+        .graphql code .type,
+        .graphql code .scalar {
+            font-weight: bold;
+        }
+
+        .graphql code .type::after,
+        .graphql code .scalar::after {
+            content: ' ';
+        }
+
+        .graphql code .type::before,
+        .graphql code .scalar::before {
+            content: '';
+        }
+
+        .graphql code .type {
+            color: #99cc99;
+        }
+
+        .graphql code .scalar {
+            color: #f08d49;
+        }
+
+        .graphql code .comment {
+            color: #888;
+            font-style: italic;
+        }
+
+    </style>
+    <title>Twindex GraphQL Schema</title>
+</head>
+<body>
+    <pre class="graphql">
+        <code>
+            <span class="comment">A twtxt feed on the network.</span>
+            <span class="type">type Feed</span> {
+              <span class="comment">A url to the avatar image of the feed set by the feed's owner.</span>
+              avatar: <span class="type">String</span>
+
+              <span class="comment">A description of the feed, set by the feed's owner.</span>
+              bio: <span class="type">String</span>
+
+              <span class="comment">A list of the feeds that (explicitly reveal they) follow this feed.</span>
+              followers: [<span class="type">Follow</span>!]
+
+              <span class="comment">A list of the feeds the feed (explicitly reveals it) follows.</span>
+              follows: [<span class="type">Follow</span>!]
+
+              <span class="comment">The ID of the feed in the indexer's database. Not usually useful.</span>
+              id: <span class="type">ID</span>!
+
+              <span class="comment">A list of the twts that mention this feed. Useful for generating notifications.</span>
+              mentions: [<span class="type">Mention</span>!]
+
+              <span class="comment">The human-readable nickname of the feed set by the feed's owner.</span>
+              nick: <span class="type">String</span>
+
+              <span class="comment">The last time the indexer crawled the feed.</span>
+              syncedAt: <span class="type">ISO8601DateTime</span>
+
+              <span class="comment">A list of the twts the feed has published.</span>
+              twts: [<span class="type">Twt</span>!]
+
+              <span class="comment">The URL of the feed.</span>
+              url: <span class="type">String</span>!
+            }
+
+            <span class="type">type Follow</span> {
+              <span class="comment">The feed that is doing the following.</span>
+              follower: <span class="type">Feed</span>!
+
+              <span class="comment">The feed that is being followed.</span>
+              following: <span class="type">Feed</span>!
+              id: <span class="type">ID</span>!
+            }
+
+            <span class="comment">An ISO 8601-encoded datetime</span>
+            <span class="type">scalar ISO8601DateTime</span>
+
+            <span class="type">type Mention</span> {
+              <span class="comment">The feed the twt this mention is in mentioned.</span>
+              feed: <span class="type">Feed</span>!
+              id: <span class="type">ID</span>!
+
+              <span class="comment">The twt this mention is in.</span>
+              twt: [<span class="type">Twt</span>!]
+            }
+
+            <span class="type">type Query</span> {
+                <span class="comment">feed(
+                  The URL of the feed. Its ID in the indexer's database can be used as well.
+                  url: ID!
+                ): <span class="type">Feed</span>!
+                twt(
+                  <span class="comment">The hash of the twt, per https://dev.twtxt.net/doc/twthashextension.html</span>
+                  hash: ID!
+                ): <span class="type">Twt</span>!
+                twts(
+                  <span class="comment">A list of twts which match the query.</span>
+                  query: <span class="type">String</span>!
+                ): [<span class="type">Twt</span>!]
+              }
+
+            <span class="comment">A specific twt.</span>
+            <span class="type">type Twt</span> {
+              <span class="comment">The content of the twt, excluding metadata.</span>
+              content: <span class="type">String</span>
+
+              <span class="comment">Timestamp of the twt.</span>
+              createdAt: <span class="type">ISO8601DateTime</span>
+
+              <span class="comment">The twtxt feed the twt belongs to.</span>
+              feed: <span class="type">Feed</span>
+
+              <span class="comment">The hash of the twt, per https://dev.twtxt.net/doc/twthashextension.html</span>
+              hash: <span class="type">ID</span>!
+
+              <span class="comment">A list of mentioned feeds in the twt.</span>
+              mentions: [<span class="type">Mention</span>!]
+
+              <span class="comment">The raw twt, including metadata but excluding timestamp.</span>
+              original: <span class="type">String</span>
+
+              <span class="comment">The twt this twt is a reply to.</span>
+              parent: <span class="type">Twt</span>
+
+              <span class="comment">A list of replies to the twt.</span>
+              replies: [<span class="type">Twt</span>!]
+
+              <span class="comment">The hash of the twt that this twt is a reply to.</span>
+              replyTo: <span class="type">String</span>
+            }
+        </code>
+    </pre>
+</body>
+</html>
