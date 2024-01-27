@@ -21,11 +21,6 @@ module Twindex
         }
       end
     end
-    refine NilClass do
-      def map(*)
-        [self]
-      end
-    end
     refine Time do
       def empty?
         self == Time.at(0)

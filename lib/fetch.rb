@@ -13,16 +13,16 @@ end
 module FetchTwts
   class << self
     def from_http_url(feed_url)
-      begin
-        parse_feed(
-          HTTParty.get(
-            feed_url, headers: Twindex::HEADERS
-          ).body, feed_url
-        )
-      rescue
-        return "1969-12-31T16:00:00-08:00\tInvalidFeed"
-      end
+      parse_feed(
+        HTTParty.get(
+          feed_url, headers: Twindex::HEADERS,
+        ).body, feed_url
+      )
+    rescue
+      return "1969-12-31T16:00:00-08:00\tInvalidFeed"
     end
+
+    alias_method :from_https_url, :from_http_url
 
     def from_gopher_url(feed_url)
       parse_feed(
@@ -39,14 +39,8 @@ module FetchTwts
     end
 
     def from(url)
-      url.match(/^(http|https|gopher|gemini):\/\//).then { |match_data|
-        match_data ?
-          match_data[1].then { |url_type|
-          ["http", "https"].include?(url_type) ?
-            from_http_url(url) : url_type == "gopher" ?
-            from_gopher_url(url) : url_type == "gemini" ?
-            from_gemini_url(url) : nil
-        } : nil
+      url.match(/^(https?|gopher|gemini):\/\//).then { |match_data|
+        match_data ? match_data[1].then { |url_type| send("from_#{url_type}_url", url) } : nil
       }
     end
 

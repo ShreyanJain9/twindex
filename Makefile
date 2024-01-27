@@ -1,4 +1,4 @@
-.PHONY: all twthash database test help deps
+.PHONY: all twthash gemini gopher database test help deps
 
 help:
 	@echo "Usage: make [target]"
