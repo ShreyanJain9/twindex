@@ -7,5 +7,8 @@ module Twindex
         context: { current_user: nil },
       ).to_h)
     }
+    get "/" do
+      erb :index
+    end
   end
 end
